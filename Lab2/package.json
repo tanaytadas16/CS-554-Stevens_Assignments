@@ -1,0 +1,19 @@
+{
+    "name": "cs-546-lab-2",
+    "version": "1.0.0",
+    "description": "lab assignment",
+    "main": "app.js",
+    "scripts": {
+        "dev": "nodemon app.js",
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Tanay Tadas 10478620",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.2",
+        "flat": "^5.0.2",
+        "node-redis": "^0.1.7",
+        "redis": "^4.0.3"
+    }
+}
