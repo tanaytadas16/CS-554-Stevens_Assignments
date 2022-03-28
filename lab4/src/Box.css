@@ -1,0 +1,12 @@
+.grid {
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.Search-bar {
+    max-width: 60%;
+
+    padding-left: 40%;
+    padding-bottom: 5%;
+}
