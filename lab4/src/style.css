@@ -54,7 +54,7 @@
 .restart {
     color: white;
     margin-top: 20px;
-    font-size: 1.5rem;
+    font-size: 1.9rem;
     text-transform: uppercase;
     letter-spacing: -0.08rem;
     transition: opacity 150ms linear;
@@ -315,9 +315,9 @@
 .button {
     width: 25%;
     height: 20%;
-    size: 500px;
+    size: 200px;
     border: 1px solid white;
-    font-size: 50px;
+    font-size: 15px;
     font-weight: bolder;
     margin-right: 20px;
     margin-left: 20px;

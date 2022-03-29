@@ -41,15 +41,15 @@ const Comic = () => {
                                 src={`${Comic.thumbnail.path}/portrait_uncanny.${Comic.thumbnail.extension}`}
                                 alt="Not found"
                             ></img>
-                            <h2>{Comic.title}</h2>
+                            <h1>{Comic.title}</h1>
                             <p>{Comic.description}</p>
                         </div>
                         <Row>
                             <Col>
                                 <div className="contentlinks">
-                                    <h4>
+                                    <h2>
                                         <u> Featured in Series:</u>
-                                    </h4>
+                                    </h2>
 
                                     <div>
                                         <ul>
@@ -65,13 +65,13 @@ const Comic = () => {
                             </Col>
                             <Col>
                                 <div className="contentlinks">
-                                    <h4>
+                                    <h2>
                                         <u>Featured Characters:</u>
-                                    </h4>
+                                    </h2>
                                     <div>
                                         <ul>
                                             {Comic.characters.items.map(
-                                                (eachCharacter) => {
+                                                (eachCharacter, index) => {
                                                     console.log(eachCharacter);
                                                     linkid =
                                                         eachCharacter.resourceURI
@@ -80,7 +80,7 @@ const Comic = () => {
                                                     console.log(linkid);
 
                                                     return (
-                                                        <li>
+                                                        <li key={index}>
                                                             {' '}
                                                             <Link
                                                                 to={`/characters/${linkid}`}

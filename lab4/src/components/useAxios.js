@@ -15,7 +15,7 @@ const useAxios = (url, isList, page, searchTerm, startsWith, offset) => {
 
     if (searchTerm) {
         fetchUrl = `${baseUrl}/${url}?${startsWith}${searchTerm}&${keyHash}&offset=${offset}`;
-        console.log(fetchUrl);
+        // console.log(fetchUrl);
     } else if (isList) {
         fetchUrl = `${baseUrl}/${url}?${keyHash}&offset=${offset}`;
     } else {
@@ -29,11 +29,11 @@ const useAxios = (url, isList, page, searchTerm, startsWith, offset) => {
         const getData = async () => {
             try {
                 let { data } = await axios.get(fetchUrl);
-                if (!data) setError(true);
-                else if (data.data.results.length == 0) setError(true);
-                console.log(data);
+
                 setData(data.data);
                 setLoading(false);
+                if (!data) setError(true);
+                else if (data.data.results.length == 0) setError(true);
             } catch (e) {
                 setLoading(false);
                 setData(null);

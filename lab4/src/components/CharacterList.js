@@ -41,7 +41,9 @@ const CharacterList = () => {
             </div>
         );
     }
-    if (!data || error == true) {
+    if (!data) {
+        return <Error />;
+    } else if (error == true) {
         return <Error />;
     }
     const buildCard = (characters) => {
@@ -72,7 +74,7 @@ const CharacterList = () => {
         });
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
-        // setPageNum(pageNum);
+        setPageNum(0);
         navigate('/characters/page/0');
     };
     const totalPage = Math.ceil(data.total / data.limit);

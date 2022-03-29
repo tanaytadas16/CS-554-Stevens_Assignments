@@ -72,7 +72,7 @@ const ComicsList = () => {
         });
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
-        // setPageNum(pageNum);
+        setPageNum(0);
         navigate('/comics/page/0');
     };
     const totalPage = Math.ceil(data.total / data.limit);

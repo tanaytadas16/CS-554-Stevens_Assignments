@@ -37,27 +37,27 @@ const Character = () => {
                                 src={`${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}`}
                                 alt="Not found"
                             ></img>
-                            <h2>{character.name}</h2>
+                            <h1>{character.name}</h1>
                             <p className="m-4 ">{character.description}</p>
                         </div>
                         <Row>
                             <Col>
                                 <div className="contentlinks">
-                                    <h4>
+                                    <h2>
                                         <u> Featured in Series:</u>
-                                    </h4>
+                                    </h2>
 
                                     <div>
                                         <ul>
                                             {character.series.items.map(
-                                                (eachSeries) => {
+                                                (eachSeries, index) => {
                                                     linkid =
                                                         eachSeries.resourceURI
                                                             .split('/')
                                                             .pop();
 
                                                     return (
-                                                        <li>
+                                                        <li key={index}>
                                                             {' '}
                                                             <Link
                                                                 to={`/series/${linkid}`}
@@ -76,20 +76,20 @@ const Character = () => {
                             </Col>
                             <Col>
                                 <div className="contentlinks">
-                                    <h4>
+                                    <h2>
                                         <u>Featured in Comics:</u>
-                                    </h4>
+                                    </h2>
                                     <div>
                                         <ul>
                                             {character.comics.items.map(
-                                                (eachSeries) => {
+                                                (eachSeries, index) => {
                                                     linkid =
                                                         eachSeries.resourceURI
                                                             .split('/')
                                                             .pop();
 
                                                     return (
-                                                        <li>
+                                                        <li key={index}>
                                                             {' '}
                                                             <Link
                                                                 to={`/comics/${linkid}`}
