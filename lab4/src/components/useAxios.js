@@ -30,6 +30,7 @@ const useAxios = (url, isList, page, searchTerm, startsWith, offset) => {
             try {
                 let { data } = await axios.get(fetchUrl);
                 if (!data) setError(true);
+                else if (data.data.results.length == 0) setError(true);
                 console.log(data);
                 setData(data.data);
                 setLoading(false);
@@ -42,6 +43,6 @@ const useAxios = (url, isList, page, searchTerm, startsWith, offset) => {
         getData();
     }, [url, page, searchTerm]);
 
-    return [data, loading];
+    return [data, loading, error];
 };
 export default useAxios;

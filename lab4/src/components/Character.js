@@ -9,7 +9,8 @@ import '../App.css';
 const Character = () => {
     let linkid = '';
     const { id } = useParams();
-    const [data, loading] = useAxios(`characters/${id}`);
+    const [data, loading, error] = useAxios(`characters/${id}`);
+
     if (loading) {
         return (
             <div className="loading">
@@ -17,13 +18,13 @@ const Character = () => {
             </div>
         );
     }
-    // if (!data) {
-    //     return (
-    //         <div>
-    //             <Error />
-    //         </div>
-    //     );
-    // }
+    if (!data || error) {
+        return (
+            <div>
+                <Error />
+            </div>
+        );
+    }
     return (
         <div className="App">
             {data.results.map((character) => {

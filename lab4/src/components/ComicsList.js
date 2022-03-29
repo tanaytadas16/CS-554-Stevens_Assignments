@@ -41,7 +41,7 @@ const ComicsList = () => {
             </div>
         );
     }
-    if (!data) {
+    if (!data || error == true) {
         return <Error />;
     }
     const buildCard = (comics) => {

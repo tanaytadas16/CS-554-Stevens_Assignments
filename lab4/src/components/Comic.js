@@ -12,7 +12,7 @@ const Comic = () => {
     let { id } = useParams();
     id = parseInt(id);
 
-    const [data, loading] = useAxios(`comics/${id}`);
+    const [data, loading, error] = useAxios(`comics/${id}`);
     console.log('data', data);
     if (loading) {
         return (
@@ -21,8 +21,12 @@ const Comic = () => {
             </div>
         );
     }
-    if (!data) {
-        return <div>404</div>;
+    if (!data || error) {
+        return (
+            <div>
+                <Error />
+            </div>
+        );
     }
     return (
         <div className="App">

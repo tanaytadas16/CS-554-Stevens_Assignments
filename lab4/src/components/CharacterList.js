@@ -41,7 +41,7 @@ const CharacterList = () => {
             </div>
         );
     }
-    if (!data) {
+    if (!data || error == true) {
         return <Error />;
     }
     const buildCard = (characters) => {

@@ -9,7 +9,7 @@ import '../App.css';
 const Series = () => {
     let linkid = '';
     const { id } = useParams();
-    const [data, loading] = useAxios(`series/${id}`);
+    const [data, loading, error] = useAxios(`series/${id}`);
     if (loading) {
         return (
             <div className="loading">
@@ -17,8 +17,12 @@ const Series = () => {
             </div>
         );
     }
-    if (!data) {
-        return <div>404</div>;
+    if (!data || error) {
+        return (
+            <div>
+                <Error />
+            </div>
+        );
     }
     return (
         <div className="App">
