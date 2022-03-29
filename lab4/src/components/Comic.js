@@ -1,11 +1,10 @@
 import { React } from 'react';
 import useAxios from './useAxios';
 import { useParams, Link } from 'react-router-dom';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import waiting from '../loading-buffering.gif';
 import Error from './Error';
 import '../App.css';
-import ComicsList from './ComicsList';
 
 const Comic = () => {
     let linkid = '';
@@ -13,7 +12,7 @@ const Comic = () => {
     id = parseInt(id);
 
     const [data, loading, error] = useAxios(`comics/${id}`);
-    console.log('data', data);
+
     if (loading) {
         return (
             <div className="loading">
@@ -72,12 +71,10 @@ const Comic = () => {
                                         <ul>
                                             {Comic.characters.items.map(
                                                 (eachCharacter, index) => {
-                                                    console.log(eachCharacter);
                                                     linkid =
                                                         eachCharacter.resourceURI
                                                             .split('/')
                                                             .pop();
-                                                    console.log(linkid);
 
                                                     return (
                                                         <li key={index}>

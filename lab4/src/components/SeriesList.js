@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import useAxios from './useAxios';
 import waiting from '../loading-buffering.gif';
-import { Card, Row, Col, Container, Button } from 'react-bootstrap';
+import { Card, Row, Col, Container } from 'react-bootstrap';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -126,6 +126,22 @@ const SeriesList = () => {
                     <Row>{card}</Row>
                 </Container>
             </div>
+            <br />
+            <Row>
+                <Col md={{ span: 8, offset: 5 }}>
+                    <div className="m-1">
+                        <Stack spacing={2} className="align-center">
+                            <Pagination
+                                count={totalPage}
+                                variant="outlined"
+                                shape="rounded"
+                                onChange={handlePage}
+                                page={pageNum + 1}
+                            />
+                        </Stack>
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 };

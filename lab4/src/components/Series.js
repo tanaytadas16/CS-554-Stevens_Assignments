@@ -1,7 +1,7 @@
 import { React } from 'react';
 import useAxios from './useAxios';
 import { useParams, Link } from 'react-router-dom';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import waiting from '../loading-buffering.gif';
 import Error from './Error';
 import '../App.css';
