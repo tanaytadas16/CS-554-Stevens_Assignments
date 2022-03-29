@@ -43,13 +43,13 @@ function App() {
                                 </Row>
                                 <div style={{ fontSize: 18 }}>
                                     <Nav className="m-auto" variant="dark">
-                                        <Nav.Link href="/characters/page/1">
+                                        <Nav.Link href="/characters/page/0">
                                             Characters
                                         </Nav.Link>
-                                        <Nav.Link href="/comics/page/1">
+                                        <Nav.Link href="/comics/page/0">
                                             Comics
                                         </Nav.Link>
-                                        <Nav.Link href="/series/page/1">
+                                        <Nav.Link href="/series/page/0">
                                             Series
                                         </Nav.Link>
                                     </Nav>

@@ -1,30 +1,38 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../style.css';
 import '../App.css';
 const Home = () => {
     return (
         <div className="HomeBody">
-            <div class="wrapper run-animation" id="animate">
-                <div class="logo">
-                    <span class="marvel">Marvel</span>
-                    <span class="studios">Studios</span>
+            <div className="wrapper run-animation" id="animate">
+                <div className="logo">
+                    <span className="marvel">Marvel</span>
+                    <span className="studios">Studios</span>
 
-                    <div class="restart">Restart</div>
+                    <div className="restart">Welcome !!!</div>
+                    <div className="restart">
+                        <p>
+                            This website is built for Marvel Studios Characters,
+                            Comics, Series. You can View List of each
+                            respectively from the links below. You can search
+                            matching Character, comics, series by keywords.
+                        </p>
+                    </div>
 
                     <div className="m-5">
-                        <Link className="link" to={`/characters/page/1`}>
+                        <Link className="link" to={`/characters/page/0`}>
                             <Button className="button" variant="light">
                                 Characters
                             </Button>
                         </Link>
-                        <Link className="link" to={`/comics/page/1`}>
+                        <Link className="link" to={`/comics/page/0`}>
                             <Button className="button" variant="light">
                                 Comics
                             </Button>
                         </Link>
-                        <Link className="link" to={`/series/page/1`}>
+                        <Link className="link" to={`/series/page/0`}>
                             <Button className="button" variant="light">
                                 Series
                             </Button>
@@ -47,7 +55,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div class="images"></div>
+            <div className="images"></div>
 
             <script src="../script.js"></script>
         </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-const useAxios = (url, isList, page, searchTerm, startsWith) => {
+import Error from './Error';
+const useAxios = (url, isList, page, searchTerm, startsWith, offset) => {
     const axios = require('axios');
     const md5 = require('md5');
     const publickey = '0ecac5d6b17a21f2c833ae9bf42214fa';
@@ -10,11 +11,11 @@ const useAxios = (url, isList, page, searchTerm, startsWith) => {
     const baseUrl = 'https://gateway.marvel.com:443/v1/public';
     const keyHash = 'ts=' + ts + '&apikey=' + publickey + '&hash=' + hash;
 
-    let offset = Number(page) * 20;
     let fetchUrl = '';
 
     if (searchTerm) {
-        fetchUrl = `${baseUrl}/${url}?${startsWith}${searchTerm}&${keyHash}`;
+        fetchUrl = `${baseUrl}/${url}?${startsWith}${searchTerm}&${keyHash}&offset=${offset}`;
+        console.log(fetchUrl);
     } else if (isList) {
         fetchUrl = `${baseUrl}/${url}?${keyHash}&offset=${offset}`;
     } else {
@@ -23,14 +24,18 @@ const useAxios = (url, isList, page, searchTerm, startsWith) => {
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
     useEffect(() => {
         const getData = async () => {
             try {
                 let { data } = await axios.get(fetchUrl);
+                if (!data) setError(true);
                 console.log(data);
                 setData(data.data);
                 setLoading(false);
             } catch (e) {
+                setLoading(false);
+                setData(null);
                 console.log(e);
             }
         };

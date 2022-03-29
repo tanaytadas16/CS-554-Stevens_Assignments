@@ -1,13 +1,38 @@
-import { React, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import useAxios from './useAxios';
 import waiting from '../loading-buffering.gif';
 import { Card, Row, Col, Container, Button } from 'react-bootstrap';
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import '../Box.css';
+import Error from './Error';
 const isList = true;
+
 const SeriesList = () => {
     let { page } = useParams();
-    let [data, loading] = useAxios('series', isList, page);
+    page = parseInt(page);
+    const navigate = useNavigate();
+    let [searchTerm, setSearchTerm] = useState('');
+    let [pageNum, setPageNum] = useState(page);
+    // let [offset, setOffset] = useState(pageNum * 20);
+    useEffect(() => {
+        setPageNum(page);
+    }, [page]);
+
+    // console.log(offset);
+    const startsWith = 'titleStartsWith=';
+
+    let [data, loading, error] = useAxios(
+        'series',
+        isList,
+        page,
+        searchTerm,
+        startsWith,
+        pageNum * 20
+    );
 
     if (loading) {
         return (
@@ -16,14 +41,17 @@ const SeriesList = () => {
             </div>
         );
     }
+    if (!data) {
+        return <Error />;
+    }
     const buildCard = (series) => {
         return (
-            <Col className="mb-5">
+            <Col className="mb-5" key={series.id}>
                 <Link to={`/series/${series.id}`}>
                     <Card style={{ width: '18rem' }} key={series.id}>
                         <Card.Img
                             variant="top"
-                            src={`${series.thumbnail.path}/standard_fantastic.${series.thumbnail.extension}`}
+                            src={`${series.thumbnail.path}/portrait_uncanny.${series.thumbnail.extension}`}
                             alt={`${series.title}`}
                         />
                         <Card.Body>
@@ -42,28 +70,64 @@ const SeriesList = () => {
         data.results.map((series) => {
             return buildCard(series);
         });
+    const handleChange = (e) => {
+        setSearchTerm(e.target.value);
+        // setPageNum(pageNum);
+        navigate('/series/page/0');
+    };
+    const totalPage = Math.ceil(data.total / data.limit);
+
+    const handlePage = (event, value) => {
+        setPageNum(parseInt(value) - 1);
+        navigate(`/series/page/${value - 1}`);
+    };
+
     return (
         <div className="text-center mb-5">
-            <div>
-                {page > 0 && (
-                    <Link
-                        className="link"
-                        to={`/series/page/${Number(page) - 1}`}
-                    >
-                        <Button className="btn me-3 mb-5 align-center">
-                            Prev
-                        </Button>
-                    </Link>
-                )}
-
-                <Link className="link" to={`/series/page/${Number(page) + 1}`}>
-                    <Button className="btn ms-3 mb-5 align-center">Next</Button>
-                </Link>
+            <div className="Search">
+                <br />
+                <Row>
+                    <Col md={{ span: 5, offset: 5 }}>
+                        <InputGroup className="w-50 align">
+                            <FormControl
+                                id="searchBar"
+                                placeholder="Searching for something, type here"
+                                aria-label="Search"
+                                aria-describedby="basic-addon2"
+                                value={searchTerm}
+                                onChange={handleChange}
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
             </div>
-            <Container className="container-fluid flex-lg-wrap flex-coloumn ">
-                <Row>{card}</Row>
-            </Container>
+            <br />
+            <br />
+            <Row>
+                <Col md={{ span: 8, offset: 5 }}>
+                    <div className="m-1">
+                        <Stack spacing={2} className="align-center">
+                            <Pagination
+                                count={totalPage}
+                                variant="outlined"
+                                shape="rounded"
+                                onChange={handlePage}
+                                page={pageNum + 1}
+                            />
+                        </Stack>
+                    </div>
+                </Col>
+            </Row>
+
+            <br />
+
+            <div className="Content">
+                <Container className="container-fluid d-flex flex-lg-wrap flex-coloumn ">
+                    <Row>{card}</Row>
+                </Container>
+            </div>
         </div>
     );
 };
+
 export default SeriesList;

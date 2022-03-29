@@ -1,12 +1,19 @@
 import { React } from 'react';
 import useAxios from './useAxios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { Row, Col, Card } from 'react-bootstrap';
 import waiting from '../loading-buffering.gif';
+import Error from './Error';
+import '../App.css';
+import ComicsList from './ComicsList';
 
 const Comic = () => {
-    const { id } = useParams();
+    let linkid = '';
+    let { id } = useParams();
+    id = parseInt(id);
+
     const [data, loading] = useAxios(`comics/${id}`);
-    console.log(data);
+    console.log('data', data);
     if (loading) {
         return (
             <div className="loading">
@@ -14,22 +21,79 @@ const Comic = () => {
             </div>
         );
     }
+    if (!data) {
+        return <div>404</div>;
+    }
     return (
         <div className="App">
-            {data.results.map((comic) => {
-                {
-                    console.log(comic);
-                }
+            {data.results.map((Comic) => {
+                linkid = Comic.series.resourceURI.split('/').pop();
                 return (
-                    <div key={comic.id}>
-                        {comic.name}
+                    <div key={Comic.id}>
+                        <br />
+                        <br />
                         <div>
                             <img
-                                src={`${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`}
-                                alt="Not  found"
+                                src={`${Comic.thumbnail.path}/portrait_uncanny.${Comic.thumbnail.extension}`}
+                                alt="Not found"
                             ></img>
-                            <p>{comic.description}</p>
+                            <h2>{Comic.title}</h2>
+                            <p>{Comic.description}</p>
                         </div>
+                        <Row>
+                            <Col>
+                                <div className="contentlinks">
+                                    <h4>
+                                        <u> Featured in Series:</u>
+                                    </h4>
+
+                                    <div>
+                                        <ul>
+                                            <li>
+                                                {' '}
+                                                <Link to={`/series/${linkid}`}>
+                                                    {Comic.series.name}
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col>
+                                <div className="contentlinks">
+                                    <h4>
+                                        <u>Featured Characters:</u>
+                                    </h4>
+                                    <div>
+                                        <ul>
+                                            {Comic.characters.items.map(
+                                                (eachCharacter) => {
+                                                    console.log(eachCharacter);
+                                                    linkid =
+                                                        eachCharacter.resourceURI
+                                                            .split('/')
+                                                            .pop();
+                                                    console.log(linkid);
+
+                                                    return (
+                                                        <li>
+                                                            {' '}
+                                                            <Link
+                                                                to={`/characters/${linkid}`}
+                                                            >
+                                                                {
+                                                                    eachCharacter.name
+                                                                }
+                                                            </Link>
+                                                        </li>
+                                                    );
+                                                }
+                                            )}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
                     </div>
                 );
             })}

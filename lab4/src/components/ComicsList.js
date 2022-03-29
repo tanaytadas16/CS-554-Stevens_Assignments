@@ -1,26 +1,37 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import useAxios from './useAxios';
 import waiting from '../loading-buffering.gif';
-import { Card, Row, Col, Container, Button, Form } from 'react-bootstrap';
+import { Card, Row, Col, Container, Button } from 'react-bootstrap';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import '../Box.css';
+import Error from './Error';
 const isList = true;
 
 const ComicsList = () => {
     let { page } = useParams();
-    const navigate = useNavigate('');
+    page = parseInt(page);
+    const navigate = useNavigate();
     let [searchTerm, setSearchTerm] = useState('');
+    let [pageNum, setPageNum] = useState(page);
+    // let [offset, setOffset] = useState(pageNum * 20);
+    useEffect(() => {
+        setPageNum(page);
+    }, [page]);
+
+    // console.log(offset);
     const startsWith = 'titleStartsWith=';
-    let [data, loading] = useAxios(
+
+    let [data, loading, error] = useAxios(
         'comics',
         isList,
         page,
         searchTerm,
-        startsWith
+        startsWith,
+        pageNum * 20
     );
 
     if (loading) {
@@ -30,9 +41,12 @@ const ComicsList = () => {
             </div>
         );
     }
+    if (!data) {
+        return <Error />;
+    }
     const buildCard = (comics) => {
         return (
-            <Col className="mb-5">
+            <Col className="mb-5" key={comics.id}>
                 <Link to={`/comics/${comics.id}`}>
                     <Card style={{ width: '18rem' }} key={comics.id}>
                         <Card.Img
@@ -58,24 +72,26 @@ const ComicsList = () => {
         });
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
+        // setPageNum(pageNum);
+        navigate('/comics/page/0');
     };
     const totalPage = Math.ceil(data.total / data.limit);
 
-    const pageNum = 1;
-    const handlePage = (e) => {
-        navigate(`/comics/page/${pageNum}`);
+    const handlePage = (event, value) => {
+        setPageNum(parseInt(value) - 1);
+        navigate(`/comics/page/${value - 1}`);
     };
-    // const style = { backgroundColor: '#e12835', padding: '1.5em' };
+
     return (
         <div className="text-center mb-5">
             <div className="Search">
                 <br />
                 <Row>
-                    <Col md={{ span: 4, offset: 9 }}>
+                    <Col md={{ span: 5, offset: 5 }}>
                         <InputGroup className="w-50 align">
                             <FormControl
                                 id="searchBar"
-                                placeholder="Search"
+                                placeholder="Searching for something, type here"
                                 aria-label="Search"
                                 aria-describedby="basic-addon2"
                                 value={searchTerm}
@@ -85,36 +101,24 @@ const ComicsList = () => {
                     </Col>
                 </Row>
             </div>
-            <div className="Pagination">
-                <div className="Bootstrap pagination">
-                    <Stack spacing={2}>
-                        <Pagination
-                            count={totalPage}
-                            variant="outlined"
-                            shape="rounded"
-                            onChange={handlePage}
-                            page={pageNum}
-                        />
-                    </Stack>
-                </div>
+            <br />
+            <br />
+            <Row>
+                <Col md={{ span: 8, offset: 5 }}>
+                    <div className="m-1">
+                        <Stack spacing={2} className="align-center">
+                            <Pagination
+                                count={totalPage}
+                                variant="outlined"
+                                shape="rounded"
+                                onChange={handlePage}
+                                page={pageNum + 1}
+                            />
+                        </Stack>
+                    </div>
+                </Col>
+            </Row>
 
-                <br />
-                <br />
-                {page > 0 && (
-                    <Link
-                        className="link"
-                        to={`/comics/page/${Number(page) - 1}`}
-                    >
-                        <Button className="btn me-3 mb-5 align-center">
-                            Prev
-                        </Button>
-                    </Link>
-                )}
-
-                <Link className="link" to={`/comics/page/${Number(page) + 1}`}>
-                    <Button className="btn ms-3 mb-5 align-center">Next</Button>
-                </Link>
-            </div>
             <br />
 
             <div className="Content">
@@ -122,6 +126,22 @@ const ComicsList = () => {
                     <Row>{card}</Row>
                 </Container>
             </div>
+            <br />
+            <Row>
+                <Col md={{ span: 8, offset: 5 }}>
+                    <div className="m-1">
+                        <Stack spacing={2} className="align-center">
+                            <Pagination
+                                count={totalPage}
+                                variant="outlined"
+                                shape="rounded"
+                                onChange={handlePage}
+                                page={pageNum + 1}
+                            />
+                        </Stack>
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 };
