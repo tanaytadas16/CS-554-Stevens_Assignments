@@ -1,0 +1,21 @@
+{
+    "name": "cs-554-lab",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon app.js"
+    },
+    "author": "Tanay Tadas 10478620",
+    "license": "ISC",
+    "dependencies": {
+        "apollo-server": "^3.6.7",
+        "axios": "^0.26.1",
+        "flat": "^5.0.2",
+        "graphql": "^16.3.0",
+        "nodemon": "^2.0.15",
+        "redis": "^4.0.6",
+        "uuid": "^8.3.2"
+    }
+}
