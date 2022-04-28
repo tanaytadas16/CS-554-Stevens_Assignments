@@ -2,7 +2,6 @@ import { React, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import MediaCard from './MediaCard';
-// import { Card, Row, Col, Container, Button } from 'react-bootstrap';
 
 import '../App.css';
 import waiting from '../loading-buffering.gif';
@@ -38,7 +37,6 @@ function PokemonList() {
         setSearch(e.target.value);
     };
     const handleButton = () => {
-        // console.log('Button pressed');
         refetch({
             searchTerm: searchTerm,
         });
@@ -58,10 +56,24 @@ function PokemonList() {
     if (error) {
         return <div>Error</div>;
     }
+    if (
+        data &&
+        data.getPokemonList &&
+        data.getPokemonList.PokemonData &&
+        data.getPokemonList.PokemonData.length === 0
+    ) {
+        return (
+            <div>
+                <br />
+                <br />
+                <h1>404, No Data Found </h1>
+            </div>
+        );
+    }
     return (
         <div>
             <div>
-                <h1>PokeMon List</h1>
+                <h1>Pokemon List</h1>
             </div>
 
             <label>
@@ -113,7 +125,9 @@ function PokemonList() {
                                 </Grid>
                             );
                         })}
-                    {!data.getPokemonList.PokemonData && <div>Not Found</div>}
+                    {!data.getPokemonList.PokemonData && (
+                        <div className="m-5">Not Found</div>
+                    )}
                 </Grid>
             </div>
         </div>

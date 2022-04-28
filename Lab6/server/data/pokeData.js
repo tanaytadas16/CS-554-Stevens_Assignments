@@ -1,4 +1,9 @@
 const axios = require('axios');
+const redis = require('redis');
+const client = redis.createClient();
+(async () => {
+    await client.connect();
+})();
 
 const getPokeList = async (pageNum, searchTerm) => {
     const offset = pageNum * 20;
@@ -18,41 +23,62 @@ const getPokeList = async (pageNum, searchTerm) => {
             return { count: 0, PokemonData: null };
         }
     }
-    // let pokeCacheData = await client.getAsync(trace);
-    // if (pokeCacheData) return JSON.parse(pokeCacheData);
-    const { data } = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=${offset}`
-    );
 
-    let count = data.count;
-    const results = data.results.map((poke) => {
-        let pokeId = poke.url.split('/')[6];
-        let obj = {
-            id: pokeId,
-            name: poke.name,
-            url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeId}.png`,
-        };
-        return obj;
-    });
-    // await client.setAsync(trace, JSON.stringify(results));
-    return { count: count, PokemonData: results };
+    let pokeCacheData = await client.exists(`PokeList${offset}`);
+
+    if (pokeCacheData) {
+        let pokeCacheData = await client.get(`PokeList${offset}`);
+
+        return JSON.parse(pokeCacheData);
+    } else {
+        const { data } = await axios.get(
+            `https://pokeapi.co/api/v2/pokemon?offset=${offset}`
+        );
+
+        let count = data.count;
+        const results = data.results.map((poke) => {
+            let pokeId = poke.url.split('/')[6];
+            let obj = {
+                id: pokeId,
+                name: poke.name,
+                url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeId}.png`,
+            };
+            return obj;
+        });
+        await client.set(
+            `PokeList${offset}`,
+            JSON.stringify({ count: count, PokemonData: results })
+        );
+
+        return { count: count, PokemonData: results };
+    }
 };
 const getEachPoke = async (id) => {
-    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    let pokeCacheData = await client.exists(`Pokemon${id}`);
 
-    const obj = {
-        id: data.id,
-        name: data.name,
-        url: data.sprites.other['official-artwork'].front_default,
-        abilities: data.abilities.map((soleAbility) => {
-            return soleAbility.ability.name;
-        }),
-        types: data.types.map((soleType) => {
-            return soleType.type.name;
-        }),
-    };
+    if (pokeCacheData) {
+        let pokeCacheData = await client.get(`Pokemon${id}`);
 
-    return obj;
+        return JSON.parse(pokeCacheData);
+    } else {
+        const { data } = await axios.get(
+            `https://pokeapi.co/api/v2/pokemon/${id}`
+        );
+
+        const obj = {
+            id: data.id,
+            name: data.name,
+            url: data.sprites.other['official-artwork'].front_default,
+            abilities: data.abilities.map((soleAbility) => {
+                return soleAbility.ability.name;
+            }),
+            types: data.types.map((soleType) => {
+                return soleType.type.name;
+            }),
+        };
+        await client.set(`Pokemon${id}`, JSON.stringify(obj));
+        return obj;
+    }
 };
 
 module.exports = { getPokeList, getEachPoke };

@@ -1,18 +1,16 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-// import MediaCard from './MediaCard';
 import { useParams } from 'react-router-dom';
 import '../App.css';
 import waiting from '../loading-buffering.gif';
-import Pagination from './Pagination';
 import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useSelector, useDispatch } from 'react-redux';
 import { catchPokemon, releasePokemon } from '../actions';
+import Button from '@mui/material/Button';
 
 const QUERY_POKEMON = gql`
     query Query($id: Int) {
@@ -26,7 +24,6 @@ const QUERY_POKEMON = gql`
     }
 `;
 const cardStyle = {
-    // display: 'block',
     transitionDuration: '0.3s',
     height: '50vw',
     padding: '25px',
@@ -45,7 +42,6 @@ function Pokemon() {
     let selectTeam = {};
     let teamlen = 0;
     const selectedTrainer = allState[allState.findIndex((x) => x.isSelected)];
-    11;
     if (selectedTrainer) {
         selectTeam = selectedTrainer.team;
         teamlen = selectTeam.length;
@@ -64,7 +60,16 @@ function Pokemon() {
         );
     }
     if (error) {
-        return <div>Error</div>;
+        return (
+            <div>
+                <br />
+                <br />
+
+                <div>
+                    <h1>404, No Data Found </h1>
+                </div>
+            </div>
+        );
     }
     return (
         <div className="m-5">
@@ -100,7 +105,10 @@ function Pokemon() {
                                     {selectTeam.findIndex(
                                         (x) => x.id == data.getEachPokemon.id
                                     ) != -1 ? (
-                                        <button
+                                        <Button
+                                            color="secondary"
+                                            variant="contained"
+                                            size="large"
                                             onClick={() => {
                                                 dispatch(
                                                     releasePokemon(
@@ -111,12 +119,15 @@ function Pokemon() {
                                             }}
                                         >
                                             Release
-                                        </button>
+                                        </Button>
                                     ) : teamlen != 6 &&
                                       selectTeam.findIndex(
                                           (x) => x.id == data.getEachPokemon.id
                                       ) == -1 ? (
-                                        <button
+                                        <Button
+                                            color="primary"
+                                            variant="contained"
+                                            size="large"
                                             onClick={() => {
                                                 dispatch(
                                                     catchPokemon(trainerId, {
@@ -132,12 +143,13 @@ function Pokemon() {
                                             }}
                                         >
                                             Catch
-                                        </button>
+                                        </Button>
                                     ) : (
                                         <button> Party Full </button>
                                     )}
                                 </div>
                             )}
+                            <br />
                             <CardContent>
                                 <Typography
                                     gutterBottom

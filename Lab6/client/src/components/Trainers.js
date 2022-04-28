@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Pokemon from './Pokemon';
+import Button from '@mui/material/Button';
 import {
     Card,
     CardContent,
     CardMedia,
     Grid,
     Typography,
-    makeStyles,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTrainer, deleteTrainer, selectTrainer } from '../actions';
@@ -31,8 +30,6 @@ function Trainers() {
         setNewTrainer('');
     };
     const buildCard = (pokemon) => {
-        //let pokeId = pokemon.url.split("/")[6];
-
         return (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={pokemon.name}>
                 <Card
@@ -94,33 +91,47 @@ function Trainers() {
                     </label>
                 </div>
                 <br />
-                <button onClick={addTrainer1}>Add Trainer</button>
+                <Button variant="contained" size="large" onClick={addTrainer1}>
+                    Add Trainer
+                </Button>
                 <div>
                     <br />
                     <br />
                     {allState.map((x) => {
                         return (
                             <div key={x.id}>
-                                <p>{x.name}</p>
+                                <h2>{x.name}</h2>
                                 {x.isSelected == false ? (
                                     <div>
-                                        <button
+                                        <Button
+                                            variant="contained"
+                                            size="large"
                                             onClick={() =>
                                                 dispatch(selectTrainer(x.id))
                                             }
                                         >
                                             Select Trainer
-                                        </button>
-                                        <button
+                                        </Button>
+
+                                        <Button
+                                            color="error"
+                                            variant="contained"
+                                            size="large"
                                             onClick={() =>
                                                 dispatch(deleteTrainer(x.id))
                                             }
                                         >
                                             Delete trainer
-                                        </button>
+                                        </Button>
                                     </div>
                                 ) : (
-                                    <button>Selected</button>
+                                    <Button
+                                        color="secondary"
+                                        variant="contained"
+                                        size="large"
+                                    >
+                                        Selected
+                                    </Button>
                                 )}
                                 <Grid container spacing={5}>
                                     {

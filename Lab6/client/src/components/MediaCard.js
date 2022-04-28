@@ -5,10 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { catchPokemon, releasePokemon } from '../actions';
-import Grid from '@mui/material/Grid';
 
 function MediaCard({ PokemonData }) {
     const dispatch = useDispatch();

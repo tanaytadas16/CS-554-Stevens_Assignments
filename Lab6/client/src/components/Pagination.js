@@ -21,4 +21,3 @@ export default function PaginationSize({ count, handlePage, page }) {
         </Row>
     );
 }
-//md={{ span: 8, offset: 5 }}

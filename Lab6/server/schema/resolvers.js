@@ -7,7 +7,7 @@ const resolvers = {
                 args.pageNum,
                 args.searchTerm
             );
-            // console.log(pokedata);
+
             return pokedata;
         },
         getEachPokemon: async (parent, args) => {
