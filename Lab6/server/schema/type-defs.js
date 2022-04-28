@@ -10,27 +10,16 @@ const typeDefs = gql`
     }
     type PokemonList {
         count: Int
-        PokemonData: [Pokemon]
+        PokemonData: [PokeList]
+    }
+    type PokeList {
+        id: Int
+        name: String
+        url: String
     }
     type Query {
-        getPokemonList: PokemonList
+        getPokemonList(pageNum: Int, searchTerm: String): PokemonList
         getEachPokemon(id: Int): Pokemon
     }
-    # type Mutation {
-    #     uploadImage(
-    #         url: String!
-    #         description: String
-    #         posterName: String
-    #     ): ImagePost
-    #     updateImage(
-    #         id: ID!
-    #         url: String
-    #         posterName: String
-    #         description: String
-    #         userPosted: Boolean
-    #         binned: Boolean
-    #     ): ImagePost
-    #     deleteImage(id: ID!): ImagePost
-    # }
 `;
 module.exports = { typeDefs };
