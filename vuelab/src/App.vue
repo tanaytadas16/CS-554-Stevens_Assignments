@@ -1,7 +1,5 @@
 <template>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <!-- <CharacterList /> -->
+    <NavigationComp />
     <div id="app">
         <router-view />
     </div>
@@ -9,13 +7,11 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue';
-// import CharacterList from './components/CharacterList.vue';
-
+import NavigationComp from './components/NavbarComp.vue';
 export default {
     name: 'App',
     components: {
-        // HelloWorld,
-        // CharacterList,
+        NavigationComp,
     },
 };
 </script>
@@ -27,6 +23,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+    /* margin-top: 60px; */
 }
 </style>

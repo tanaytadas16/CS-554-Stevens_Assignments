@@ -1,12 +1,17 @@
 <template>
     <div>
-        <div>{{ character }}</div>
+        <!-- <div>{{ character }}</div> -->
         <h1>{{ character.name }}</h1>
         <br />
 
-        <img v-if="this.image" :src="this.image" />
+        <img
+            v-if="this.image"
+            :src="this.image"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'"
+        />
         <br />
         <span v-html="this.character.description"></span>
+        <br />
     </div>
 </template>
 <script>
@@ -37,7 +42,8 @@ export default {
                 .get(`${baseUrl}/characters/${id}?${keyHash}`)
                 .then(({ data }) => {
                     this.character = data.data.results[0];
-                    this.image = data.data.results[0].thumbnail.path + '.jpg';
+                    this.image =
+                        data.data.results[0].thumbnail.path + '/detail.jpg';
                 })
                 .catch((error) => console.log(error));
         },
