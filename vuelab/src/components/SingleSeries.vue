@@ -91,7 +91,7 @@ import ErrorImage from '../assets/marvel404.jpg';
 // import loadingImage from '../assets/loading-buffering.gif';
 import loadingImage from '../assets/loading-gif.gif';
 export default {
-    name: 'SingleComic',
+    name: 'SingleSeries',
     data() {
         return {
             id: this.$route.params.id,
@@ -109,7 +109,7 @@ export default {
         };
     },
     methods: {
-        getComic(id) {
+        async getSeries(id) {
             axios
                 .get(`${baseUrl}/series/${id}?${keyHash}`)
                 .then(({ data }) => {
@@ -126,11 +126,11 @@ export default {
         },
     },
     created() {
-        this.getComic(this.$route.params.id);
+        this.getSeries(this.$route.params.id);
     },
     watch: {
         $route() {
-            this.getComic(this.$route.params.id);
+            this.getSeries(this.$route.params.id);
         },
     },
 };

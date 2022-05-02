@@ -64,7 +64,7 @@ export default {
         };
     },
     components: { MediaCard, PaginationComp },
-    mounted() {
+    async created() {
         axios
             .get(`${baseUrl}/series?${keyHash}&offset=${this.page * 20}`)
             .then((response) => {

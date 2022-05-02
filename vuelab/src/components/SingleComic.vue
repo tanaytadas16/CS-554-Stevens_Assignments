@@ -108,7 +108,7 @@ export default {
         };
     },
     methods: {
-        getComic(id) {
+        async getComic(id) {
             axios
                 .get(`${baseUrl}/comics/${id}?${keyHash}`)
                 .then(({ data }) => {

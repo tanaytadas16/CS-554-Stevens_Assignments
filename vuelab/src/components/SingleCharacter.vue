@@ -109,7 +109,7 @@ export default {
         };
     },
     methods: {
-        getCharacter(id) {
+        async getCharacter(id) {
             axios
                 .get(`${baseUrl}/characters/${id}?${keyHash}`)
                 .then(({ data }) => {
