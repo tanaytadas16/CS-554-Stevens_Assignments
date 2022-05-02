@@ -8,17 +8,17 @@
             "
             class="main-content"
         >
-            <h1>Characters</h1>
-            <PaginationComp :total="total" list="CharacterList" />
+            <h1>Comics</h1>
+            <PaginationComp :total="total" list="ComicList" />
             <div class="row row-cols-1 row-cols-md-4 g-4 media-card">
-                <template v-for="(character, index) in characters" :key="index">
+                <template v-for="(comics, index) in comics" :key="index">
                     <router-link
                         :to="{
-                            name: 'character',
-                            params: { id: character.id },
+                            name: 'comics',
+                            params: { id: comics.id },
                         }"
                     >
-                        <MediaCard :character="character" />
+                        <MediaCard :character="comics" />
                     </router-link>
                 </template>
             </div>
@@ -32,7 +32,7 @@
         <PaginationComp
             v-if="page >= 0 && page < Math.floor(total / 20)"
             :total="total"
-            list="CharacterList"
+            list="ComicList"
         />
     </div>
 </template>
@@ -52,13 +52,13 @@ const baseUrl = 'https://gateway.marvel.com:443/v1/public';
 const keyHash = 'ts=' + ts + '&apikey=' + publickey + '&hash=' + hash;
 
 export default {
-    name: 'CharacterList',
+    name: 'ComicsList',
     data() {
         return {
             image: ErrorImage,
             page: this.$route.params.page,
             total: Number,
-            characters: [],
+            comics: [],
             loading: true,
             loadingImage: loadingImage,
         };
@@ -66,11 +66,11 @@ export default {
     components: { MediaCard, PaginationComp },
     mounted() {
         axios
-            .get(`${baseUrl}/characters?${keyHash}&offset=${this.page * 20}`)
+            .get(`${baseUrl}/comics?${keyHash}&offset=${this.page * 20}`)
             .then((response) => {
                 // console.log(response);
                 this.loading = false;
-                this.characters = response.data.data.results;
+                this.comics = response.data.data.results;
                 this.total = response.data.data.total;
             })
             .catch((err) => {
@@ -81,7 +81,7 @@ export default {
 
     methods: {
         log() {
-            console.log(this.characters);
+            console.log(this.comics);
         },
     },
     watch: {

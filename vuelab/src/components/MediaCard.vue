@@ -1,20 +1,19 @@
 <template>
-    // class="col-xs-12 col-sm-6 col-md-4"
-    <div class="card-container">
-        <q-card class="my-card">
+    <div class="col">
+        <div class="card">
             <img
                 v-if="character.thumbnail"
                 :src="character.thumbnail.path + '/portrait_uncanny.jpg'"
+                class="card-img-top"
                 alt="Not Found"
                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'"
             />
-
-            <q-card-section>
-                <div class="text-h6">{{ character.name }}</div>
-            </q-card-section>
-
-            <q-card-section class="q-pt-none"> </q-card-section>
-        </q-card>
+            <div class="card-body">
+                <p class="card-title">
+                    {{ character.name || character.title }}
+                </p>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -23,11 +22,12 @@ export default {
 };
 </script>
 <style scoped>
-.my-card {
-    width: 100%;
-    max-width: 250px;
-}
 .card-container {
-    margin: auto;
+    padding: 10px;
+    width: auto;
+    margin: 20px;
+}
+p {
+    font-size: 20px;
 }
 </style>

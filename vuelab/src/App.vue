@@ -1,12 +1,11 @@
 <template>
     <NavigationComp />
     <div id="app">
-        <router-view />
+        <router-view :key="$route.path" />
     </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue';
 import NavigationComp from './components/NavbarComp.vue';
 export default {
     name: 'App',
@@ -24,5 +23,8 @@ export default {
     text-align: center;
     color: #2c3e50;
     /* margin-top: 60px; */
+
+    max-width: 100%;
+    /* overflow-x: hidden; */
 }
 </style>

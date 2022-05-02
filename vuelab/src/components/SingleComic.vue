@@ -7,16 +7,16 @@
         <img :src="ErrorImage" alt="error" class="error" />
     </div>
     <div v-else-if="!isError">
-        <h1>{{ character.name }}</h1>
+        <h1>{{ comics.title }}</h1>
         <br />
         <img
             v-if="this.image"
             :src="this.image"
-            alt="character"
+            alt="comic"
             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'"
         />
         <br />
-        <span v-html="this.character.description"></span>
+        <span v-html="this.comics.description"></span>
         <br />
 
         <div class="row">
@@ -27,19 +27,17 @@
                     </h3>
 
                     <div>
-                        <ul
-                            v-for="(eachSeries, index) in this.character.series
-                                .items"
-                            :key="index"
-                        >
+                        <ul>
                             <li>
                                 <a
                                     :href="
                                         '/series/' +
-                                        eachSeries.resourceURI.split('/').pop()
+                                        comics.series.resourceURI
+                                            .split('/')
+                                            .pop()
                                     "
                                     class="link-primary"
-                                    >{{ eachSeries.name }}</a
+                                    >{{ this.comics.series.name }}</a
                                 >
                             </li>
                         </ul>
@@ -50,19 +48,19 @@
             <div class="col">
                 <div className="contentlinks">
                     <h3>
-                        <u> Featured in Comics:</u>
+                        <u> Featured Characters:</u>
                     </h3>
 
                     <div>
                         <ul
-                            v-for="(eachComic, index) in this.character.comics
+                            v-for="(eachComic, index) in this.comics.characters
                                 .items"
                             :key="index"
                         >
                             <li>
                                 <a
                                     :href="
-                                        '/comics/' +
+                                        '/characters/' +
                                         eachComic.resourceURI.split('/').pop()
                                     "
                                     class="link-primary"
@@ -90,15 +88,15 @@ import ErrorImage from '../assets/marvel404.jpg';
 import loadingImage from '../assets/loading-buffering.gif';
 
 export default {
-    name: 'SingleCharacter',
+    name: 'SingleComic',
     data() {
         return {
             id: this.$route.params.id,
-            character: {
+            comics: {
                 name: '',
                 description: '',
                 series: { items: [] },
-                comics: { items: [] },
+                characters: { items: [] },
             },
             image: '',
             isError: false,
@@ -108,12 +106,12 @@ export default {
         };
     },
     methods: {
-        getCharacter(id) {
+        getComic(id) {
             axios
-                .get(`${baseUrl}/characters/${id}?${keyHash}`)
+                .get(`${baseUrl}/comics/${id}?${keyHash}`)
                 .then(({ data }) => {
                     this.loading = false;
-                    this.character = data.data.results[0];
+                    this.comics = data.data.results[0];
                     this.image =
                         data.data.results[0].thumbnail.path + '/detail.jpg';
                 })
@@ -125,11 +123,11 @@ export default {
         },
     },
     created() {
-        this.getCharacter(this.$route.params.id);
+        this.getComic(this.$route.params.id);
     },
     watch: {
         $route() {
-            this.getCharacter(this.$route.params.id);
+            this.getComic(this.$route.params.id);
         },
     },
 };

@@ -17,33 +17,15 @@
                 </div>
 
                 <div className="m-5">
-                    <!-- <Link className="link" to={`/characters/page/0`}>
-                            <Button className="button" variant="light">
-                                Characters
-                            </Button>
-                        </Link>
-                        <Link className="link" to={`/comics/page/0`}>
-                            <Button className="button" variant="light">
-                                Comics
-                            </Button>
-                        </Link>
-                        <Link className="link" to={`/series/page/0`}>
-                            <Button className="button" variant="light">
-                                Series
-                            </Button>
-                        </Link> -->
-                    {/*
-                    <router-link to="/characters/page/0" />
-                    <button href="/characters/page/1" type="button" id="button">
-                        Characters
-                    </button>
-                    <button href="/comics/page/1" type="button" id="button">
-                        Comics
-                    </button>
-                    <button href="/series/page/1" type="button" id="button">
-                        Series
-                    </button>
-                    */}
+                    <router-link to="/characters/page/0">
+                        <button type="button" class="button">Characters</button>
+                    </router-link>
+                    <router-link to="/comics/page/0">
+                        <button type="button" class="button">Comics</button>
+                    </router-link>
+                    <router-link to="/series/page/0">
+                        <button type="button" class="button">Series</button>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -63,7 +45,7 @@ export default {};
 }
 
 .HomeBody {
-    margin: 0;
+    margin: auto;
     background-color: #e12835;
     background-image: radial-gradient(
         #e12835 20%,
@@ -377,7 +359,7 @@ export default {};
     height: 20%;
     size: 200px;
     border: 1px solid white;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bolder;
     margin-right: 20px;
     margin-left: 20px;
