@@ -41,7 +41,7 @@ import axios from 'axios';
 import MediaCard from './MediaCard.vue';
 import PaginationComp from './PaginationComp.vue';
 import ErrorImage from '../assets/marvel404.jpg';
-import loadingImage from '../assets/loading-buffering.gif';
+import loadingImage from '../assets/loading-gif.gif';
 const md5 = require('md5');
 const publickey = '0ecac5d6b17a21f2c833ae9bf42214fa';
 const privatekey = 'a4c3d3f6cafca2b24870e3a088669a0fb9622935';

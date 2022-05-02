@@ -34,9 +34,6 @@
     </div>
 </template>
 <script>
-// import Vue from 'vue';
-// import { BLink } from 'bootstrap-vue';
-// Vue.component('b-link', BLink);
 export default {};
 </script>
 <style scoped>
@@ -311,9 +308,9 @@ export default {};
     80% {
         background-image: url('http://cdn.wegotthiscovered.com/wp-content/uploads/2016/05/Storm-and-Black-Panther-marriage.jpg');
     }
-    /* 90% {
+    90% {
         background-image: url('https://am21.akamaized.net/tms/cnt/uploads/2014/01/Black-Widow-70s-Suit-3-580x270.jpg');
-    } */
+    }
     100% {
         background-image: url('https://i.ytimg.com/vi/lhgrYaBmplY/maxresdefault.jpg');
     }
@@ -357,7 +354,7 @@ export default {};
 .button {
     width: 25%;
     height: 20%;
-    size: 200px;
+    /* size: 200px; */
     border: 1px solid white;
     font-size: 18px;
     font-weight: bolder;

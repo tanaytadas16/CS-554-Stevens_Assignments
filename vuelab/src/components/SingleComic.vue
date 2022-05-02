@@ -6,7 +6,9 @@
     <div v-else-if="isError || isNaN(Number(id))">
         <img :src="ErrorImage" alt="error" class="error" />
     </div>
+
     <div v-else-if="!isError">
+        <br />
         <h1>{{ comics.title }}</h1>
         <br />
         <img
@@ -22,9 +24,9 @@
         <div class="row">
             <div class="col">
                 <div className="contentlinks">
-                    <h3>
+                    <h2>
                         <u> Featured in Series:</u>
-                    </h3>
+                    </h2>
 
                     <div>
                         <ul>
@@ -85,7 +87,7 @@ const hash = md5(stringToHash);
 const baseUrl = 'https://gateway.marvel.com:443/v1/public';
 const keyHash = 'ts=' + ts + '&apikey=' + publickey + '&hash=' + hash;
 import ErrorImage from '../assets/marvel404.jpg';
-import loadingImage from '../assets/loading-buffering.gif';
+import loadingImage from '../assets/loading-gif.gif';
 
 export default {
     name: 'SingleComic',
@@ -142,9 +144,10 @@ span {
     font-size: 30px;
 }
 .contentlinks {
-    margin: 50px;
-    padding: 10px;
+    margin: 10%;
+    padding: 20px;
     border: 3px solid black;
+    border-radius: 10%;
     box-sizing: content-box;
 }
 li {
@@ -152,5 +155,8 @@ li {
 }
 img.error {
     width: 100%;
+}
+img {
+    border-radius: 1%;
 }
 </style>
